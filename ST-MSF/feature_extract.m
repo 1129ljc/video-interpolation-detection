@@ -1,0 +1,46 @@
+clc;
+clear all;
+addpath('F:\video_interpolation\video_tools\VideoRead\');
+addpath('.\feature_extract\')
+
+videos_cif_names = ["akiyo_cif", "bowing_cif", "bridge_close_cif", "bus_cif",... 
+    "city_cif", "coastguard_cif", "container_cif", "crew_cif",...
+    "flower_cif", "football_cif", "hall_monitor_cif", "harbour_cif", "highway_cif_1",...
+    "highway_cif_2", "highway_cif_3", "highway_cif_4", "highway_cif_5", "highway_cif_6", "highway_cif_7",...
+    "ice_cif", "mobile_cif", "mother_daughter_cif", "news_cif", "silent_cif", "tempete_cif", "waterfall_cif"];
+ 
+video_dir = ["F:\video_interpolation\video_dataset\AVI_FPS90\AOBMC\CIF\", ...
+    "F:\video_interpolation\video_dataset\AVI_FPS90\DSME\CIF\", ...
+    "F:\video_interpolation\video_dataset\AVI_FPS90\EBME\CIF\", ...
+    "F:\video_interpolation\video_dataset\AVI_FPS90\MCMP\CIF\", ...
+    "F:\video_interpolation\video_dataset\AVI_FPS90\MFM\CIF\", ...
+    "F:\video_interpolation\video_dataset\AVI_FPS90\PFRUC\CIF\"];
+
+save_dir = [".\feature_extract\AOBMC\CIF_90_no_compression\", ...
+    ".\feature_extract\DSME\CIF_90_no_compression\", ...
+    ".\feature_extract\EBME\CIF_90_no_compression\", ...
+    ".\feature_extract\MCMP\CIF_90_no_compression\", ...
+    ".\feature_extract\MFM\CIF_90_no_compression\", ...
+    ".\feature_extract\PFRUC\CIF_90_no_compression\"];
+
+for i=1:6
+    video_dir_1 = video_dir(1,i);
+    save_dir_1 = save_dir(1,i);
+    for j=1:size(videos_cif_names, 2)
+        video = strcat(video_dir_1,videos_cif_names(1,j), '.avi');
+        disp(video);
+        save_name = strcat(save_dir_1,videos_cif_names(1,j),'.mat');
+        disp(save_name);
+        videoFrames = AVIReadGray(video,[1,1]);
+        [Video_ST_MSF2,label2] = Cal_ST_MSF(videoFrames,'uncompressed',3,1);
+        save(save_name,'label2','Video_ST_MSF2');
+    end
+end
+
+
+
+
+
+
+
+
